@@ -4,7 +4,9 @@ import CodeMatcher from "./CodeMatcher";
 function App() {
   return (
     <>
-      <CodeMatcher />
+      <body>
+        <CodeMatcher />
+      </body>
     </>
   );
 }

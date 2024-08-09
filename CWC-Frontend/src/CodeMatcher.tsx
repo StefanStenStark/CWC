@@ -1,17 +1,17 @@
 import { ChangeEvent, useState } from "react";
-import { getQuestion } from "./QuestionFetcher";
+import { getQuestions } from "./QuestionFetcher";
 
 const normalizeWhitespace = (text: string): string => {
   return text.replace(/\s+/g, " ").trim();
 };
 
 function CodeMatcher() {
+  const questions = getQuestions();
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [inputValue, setInputValue] = useState("");
   const [isMatch, setIsMatch] = useState<boolean | null>(null);
-  const question = getQuestion().question;
-  const rightCodeSnippet = getQuestion().rightCodeSnippet;
-  const wrongCodeSnippetOne = getQuestion().wrongCodeSnippetOne;
-  const wrongCodeSnippetTwo = getQuestion().wrongCodeSnippetTwo;
+
+  const currentQuestion = questions[currentQuestionIndex];
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setInputValue(event.target.value);
@@ -19,30 +19,35 @@ function CodeMatcher() {
 
   const handleCheck = (): void => {
     const cleanedInputValue = normalizeWhitespace(inputValue);
-    const cleanedrightCodeSnippet = normalizeWhitespace(rightCodeSnippet);
-    setIsMatch(cleanedInputValue === cleanedrightCodeSnippet);
+    const cleanedRightCodeSnippet = normalizeWhitespace(
+      currentQuestion.rightCodeSnippet
+    );
+    setIsMatch(cleanedInputValue === cleanedRightCodeSnippet);
+  };
+
+  const handleNextQuestion = (): void => {
+    setCurrentQuestionIndex((prevIndex) =>
+      prevIndex < questions.length - 1 ? prevIndex + 1 : 0
+    );
+    setInputValue("");
+    setIsMatch(null);
   };
 
   return (
     <div>
-      <p>{question}</p>
+      <p>{currentQuestion.question}</p>
       <div>
-        <pre>
-          <code>{rightCodeSnippet}</code>
-        </pre>
+        <code>{currentQuestion.rightCodeSnippet}</code>
       </div>
 
       <div>
-        <pre>
-          <code>{wrongCodeSnippetOne}</code>
-        </pre>
+        <code>{currentQuestion.wrongCodeSnippetOne}</code>
       </div>
 
       <div>
-        <pre>
-          <code>{wrongCodeSnippetTwo}</code>
-        </pre>
+        <code>{currentQuestion.wrongCodeSnippetTwo}</code>
       </div>
+
       <input
         type="text"
         value={inputValue}
@@ -51,13 +56,21 @@ function CodeMatcher() {
       />
       <button
         onClick={handleCheck}
-        style={{ display: "block", marginTop: "10px" }}
+        style={{ display: "block", margin: "10px auto" }}
       >
         Check Code
       </button>
+
+      <button
+        onClick={handleNextQuestion}
+        style={{ display: "block", margin: "10px auto" }}
+      >
+        Next Question
+      </button>
+
       <p>
         {isMatch === null
-          ? 'Enter the code and press "Check Code"'
+          ? ""
           : isMatch
           ? "Code matches!"
           : "Code does not match."}
