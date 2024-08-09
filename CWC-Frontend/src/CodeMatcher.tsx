@@ -9,8 +9,10 @@ function CodeMatcher() {
   const questions = getQuestions();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [inputValue, setInputValue] = useState("");
-  const [isMatch, setIsMatch] = useState<boolean | null>(null);
   const [score, setScore] = useState(0);
+  const [buttonText, setButtonText] = useState("submit");
+  const [nextQuestionButton, setNextQuestionButton] = useState(false);
+  const [showExplanation, setShowExplanation] = useState(false);
 
   const currentQuestion = questions[currentQuestionIndex];
 
@@ -23,10 +25,18 @@ function CodeMatcher() {
     const cleanedRightCodeSnippet = normalizeWhitespace(
       currentQuestion.rightCodeSnippet
     );
+    setShowExplanation(true);
     const isCorrect = cleanedInputValue === cleanedRightCodeSnippet;
-    setIsMatch(isCorrect);
-    if (isCorrect) {
+    if (nextQuestionButton) {
+      handleNextQuestion();
+      setButtonText("submit");
+      setNextQuestionButton(false);
+      setShowExplanation(false);
+    }
+    if (isCorrect && !nextQuestionButton) {
       setScore(score + 1);
+      setButtonText("Next question");
+      setNextQuestionButton(true);
     }
   };
 
@@ -35,7 +45,6 @@ function CodeMatcher() {
       prevIndex < questions.length - 1 ? prevIndex + 1 : 0
     );
     setInputValue("");
-    setIsMatch(null);
   };
 
   return (
@@ -60,26 +69,10 @@ function CodeMatcher() {
         onClick={handleCheck}
         style={{ display: "block", margin: "10px auto" }}
       >
-        Check Code
+        {buttonText}
       </button>
-
-      <button
-        onClick={handleNextQuestion}
-        style={{ display: "block", margin: "10px auto" }}
-      >
-        Next Question
-      </button>
-
-      <p>
-        {isMatch === null
-          ? ""
-          : isMatch
-          ? "Code matches!"
-          : "Code does not match."}
-      </p>
-      <p>
-        Score: {score} / {currentQuestionIndex + 1}
-      </p>
+      <p>Score: {score}</p>
+      <p>{showExplanation ? currentQuestion.explanation : ""}</p>
     </div>
   );
 }
