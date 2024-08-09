@@ -12,7 +12,9 @@ function CodeMatcher() {
   };
 
   const handleCheck = (): void => {
-    setIsMatch(inputValue === rightCodeSnippet);
+    const cleanedInputValue = inputValue.replace(/\s+/g, "");
+    const cleanedrightCodeSnippet = rightCodeSnippet.replace(/\s+/g, "");
+    setIsMatch(cleanedInputValue === cleanedrightCodeSnippet);
   };
 
   return (
