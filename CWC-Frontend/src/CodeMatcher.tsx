@@ -10,6 +10,7 @@ function CodeMatcher() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [inputValue, setInputValue] = useState("");
   const [isMatch, setIsMatch] = useState<boolean | null>(null);
+  const [score, setScore] = useState(0);
 
   const currentQuestion = questions[currentQuestionIndex];
 
@@ -22,7 +23,11 @@ function CodeMatcher() {
     const cleanedRightCodeSnippet = normalizeWhitespace(
       currentQuestion.rightCodeSnippet
     );
-    setIsMatch(cleanedInputValue === cleanedRightCodeSnippet);
+    const isCorrect = cleanedInputValue === cleanedRightCodeSnippet;
+    setIsMatch(isCorrect);
+    if (isCorrect) {
+      setScore(score + 1);
+    }
   };
 
   const handleNextQuestion = (): void => {
@@ -45,7 +50,6 @@ function CodeMatcher() {
       <div>
         <code>{currentQuestion.wrongCodeSnippetTwo}</code>
       </div>
-
       <input
         type="text"
         value={inputValue}
@@ -72,6 +76,9 @@ function CodeMatcher() {
           : isMatch
           ? "Code matches!"
           : "Code does not match."}
+      </p>
+      <p>
+        Score: {score} / {currentQuestionIndex + 1}
       </p>
     </div>
   );
