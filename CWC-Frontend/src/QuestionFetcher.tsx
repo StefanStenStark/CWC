@@ -12,5 +12,11 @@ export function getQuestions() {
       wrongCodeSnippetOne: `useEffect(() => [], []);`,
       wrongCodeSnippetTwo: `useEffect([] => {});`,
     },
+    {
+      question: `How do you write a basic function in JavaScript?`,
+      rightCodeSnippet: `function myFunction() {}`,
+      wrongCodeSnippetOne: `function = myFunction() {}`,
+      wrongCodeSnippetTwo: `myFunction() {}`,
+    },
   ];
 }

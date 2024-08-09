@@ -39,11 +39,9 @@ function CodeMatcher() {
       <div>
         <code>{currentQuestion.rightCodeSnippet}</code>
       </div>
-
       <div>
         <code>{currentQuestion.wrongCodeSnippetOne}</code>
       </div>
-
       <div>
         <code>{currentQuestion.wrongCodeSnippetTwo}</code>
       </div>
