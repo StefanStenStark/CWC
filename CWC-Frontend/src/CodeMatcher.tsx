@@ -1,5 +1,9 @@
 import { ChangeEvent, useState } from "react";
 
+const normalizeWhitespace = (text: string): string => {
+  return text.replace(/\s+/g, " ").trim();
+};
+
 function CodeMatcher() {
   const [inputValue, setInputValue] = useState("");
   const [isMatch, setIsMatch] = useState<boolean | null>(null);
@@ -12,8 +16,8 @@ function CodeMatcher() {
   };
 
   const handleCheck = (): void => {
-    const cleanedInputValue = inputValue.replace(/\s+/g, "");
-    const cleanedrightCodeSnippet = rightCodeSnippet.replace(/\s+/g, "");
+    const cleanedInputValue = normalizeWhitespace(inputValue);
+    const cleanedrightCodeSnippet = normalizeWhitespace(rightCodeSnippet);
     setIsMatch(cleanedInputValue === cleanedrightCodeSnippet);
   };
 
