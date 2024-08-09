@@ -1,4 +1,5 @@
 import { ChangeEvent, useState } from "react";
+import { getQuestion } from "./QuestionFetcher";
 
 const normalizeWhitespace = (text: string): string => {
   return text.replace(/\s+/g, " ").trim();
@@ -7,9 +8,10 @@ const normalizeWhitespace = (text: string): string => {
 function CodeMatcher() {
   const [inputValue, setInputValue] = useState("");
   const [isMatch, setIsMatch] = useState<boolean | null>(null);
-  const rightCodeSnippet = `useEffect(() => {}, []);`;
-  const wrongCodeSnippetOne = `useEffect() => {}, [];`;
-  const wrongCodeSnippetTwo = `useEffect(() => []);`;
+  const question = getQuestion().question;
+  const rightCodeSnippet = getQuestion().rightCodeSnippet;
+  const wrongCodeSnippetOne = getQuestion().wrongCodeSnippetOne;
+  const wrongCodeSnippetTwo = getQuestion().wrongCodeSnippetTwo;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setInputValue(event.target.value);
@@ -23,7 +25,7 @@ function CodeMatcher() {
 
   return (
     <div>
-      <p>How do you write a hook in react?</p>
+      <p>{question}</p>
       <div>
         <pre>
           <code>{rightCodeSnippet}</code>
