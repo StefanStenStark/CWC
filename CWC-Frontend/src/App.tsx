@@ -1,10 +1,11 @@
 import "./App.css";
+import CodeMatcher from "./CodeMatcher";
 
 function App() {
   return (
     <>
       <div>
-        <p>CWC: Code With condifence</p>
+        <CodeMatcher />
       </div>
     </>
   );
