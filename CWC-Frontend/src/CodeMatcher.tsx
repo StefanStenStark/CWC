@@ -16,7 +16,7 @@ function CodeMatcher() {
 
   const currentQuestion = questions[currentQuestionIndex];
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
+  const handleChange = (event: ChangeEvent<HTMLTextAreaElement>): void => {
     setInputValue(event.target.value);
   };
 
@@ -59,8 +59,7 @@ function CodeMatcher() {
       <div>
         <code>{currentQuestion.wrongCodeSnippetTwo}</code>
       </div>
-      <input
-        type="text"
+      <textarea
         value={inputValue}
         onChange={handleChange}
         placeholder="Type the code here"
