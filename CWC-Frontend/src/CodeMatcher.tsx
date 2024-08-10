@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import { getQuestions } from "./QuestionFetcher";
+import "./CodeMatcher.css";
 
 const normalizeWhitespace = (text: string): string => {
   return text.replace(/\s+/g, " ").trim();
@@ -13,6 +14,7 @@ function CodeMatcher() {
   const [buttonText, setButtonText] = useState("submit");
   const [nextQuestionButton, setNextQuestionButton] = useState(false);
   const [showExplanation, setShowExplanation] = useState(false);
+  const [animateCorrect, setAnimateCorrect] = useState(false);
 
   const currentQuestion = questions[currentQuestionIndex];
 
@@ -25,18 +27,23 @@ function CodeMatcher() {
     const cleanedRightCodeSnippet = normalizeWhitespace(
       currentQuestion.rightCodeSnippet
     );
-    setShowExplanation(true);
+
     const isCorrect = cleanedInputValue === cleanedRightCodeSnippet;
     if (nextQuestionButton) {
       handleNextQuestion();
       setButtonText("submit");
       setNextQuestionButton(false);
       setShowExplanation(false);
+      setAnimateCorrect(false);
     }
     if (isCorrect && !nextQuestionButton) {
       setScore(score + 1);
       setButtonText("Next question");
       setNextQuestionButton(true);
+      setAnimateCorrect(true);
+      setTimeout(() => {
+        setShowExplanation(true);
+      }, 2000);
     }
   };
 
@@ -45,6 +52,7 @@ function CodeMatcher() {
       prevIndex < questions.length - 1 ? prevIndex + 1 : 0
     );
     setInputValue("");
+    setAnimateCorrect(false);
   };
 
   return (
@@ -70,7 +78,7 @@ function CodeMatcher() {
       >
         {buttonText}
       </button>
-      <p>Score: {score}</p>
+      <p className={animateCorrect ? "correct-answer" : ""}>Score: {score}</p>
       <p>{showExplanation ? currentQuestion.explanation : ""}</p>
     </div>
   );
