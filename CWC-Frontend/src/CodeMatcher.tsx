@@ -16,8 +16,6 @@ function CodeMatcher() {
   const [showExplanation, setShowExplanation] = useState(false);
   const [animateCorrect, setAnimateCorrect] = useState(false);
   const [animateIncorrect, setAnimateIncorrect] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchQuestions() {
@@ -26,25 +24,13 @@ function CodeMatcher() {
         setQuestions(fetchedQuestions);
       } catch (err) {
         if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError("An unknown error occurred");
+          console.log(err.message);
         }
-      } finally {
-        setLoading(false);
       }
     }
 
     fetchQuestions();
   }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
 
   const currentQuestion = questions[currentQuestionIndex];
 
