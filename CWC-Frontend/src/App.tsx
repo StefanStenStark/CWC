@@ -4,10 +4,8 @@ import NavBar from "./NavBar";
 function App() {
   return (
     <>
-      <body>
-        <NavBar />
-        <CodeMatcher />
-      </body>
+      <NavBar />
+      <CodeMatcher />
     </>
   );
 }
