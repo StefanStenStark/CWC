@@ -16,6 +16,8 @@ function CodeMatcher() {
   const [showExplanation, setShowExplanation] = useState(false);
   const [animateCorrect, setAnimateCorrect] = useState(false);
   const [animateIncorrect, setAnimateIncorrect] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchQuestions() {
@@ -24,13 +26,25 @@ function CodeMatcher() {
         setQuestions(fetchedQuestions);
       } catch (err) {
         if (err instanceof Error) {
-          console.log(err.message);
+          setError(err.message);
+        } else {
+          setError("Error fetching");
         }
+      } finally {
+        setLoading(false);
       }
     }
 
     fetchQuestions();
   }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   const currentQuestion = questions[currentQuestionIndex];
 
@@ -80,7 +94,6 @@ function CodeMatcher() {
     setAnimateCorrect(false);
     setAnimateIncorrect(false);
   };
-
   return (
     <div className="center-holder">
       <p>{currentQuestion.questionText}</p>
