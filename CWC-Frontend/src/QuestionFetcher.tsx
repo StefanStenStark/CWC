@@ -3,7 +3,6 @@ export interface Question {
   answerCorrect: string;
   answerWrongOne: string;
   answerWrongTwo: string;
-  answerWrongThree: string;
   explenationText: string;
 }
 

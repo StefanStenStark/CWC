@@ -107,9 +107,6 @@ function CodeMatcher() {
       <div>
         <code>{currentQuestion.answerWrongTwo}</code>
       </div>
-      <div>
-        <code>{currentQuestion.answerWrongThree}</code>
-      </div>
       <textarea
         value={inputValue}
         onChange={handleChange}
