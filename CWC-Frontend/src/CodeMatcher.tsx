@@ -1,5 +1,5 @@
-import { ChangeEvent, useState } from "react";
-import { getQuestions } from "./QuestionFetcher";
+import { ChangeEvent, useEffect, useState } from "react";
+import { getQuestions, Question } from "./QuestionFetcher";
 import "./CodeMatcher.css";
 
 const normalizeWhitespace = (text: string): string => {
@@ -7,7 +7,7 @@ const normalizeWhitespace = (text: string): string => {
 };
 
 function CodeMatcher() {
-  const questions = getQuestions();
+  const [questions, setQuestions] = useState<Question[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [inputValue, setInputValue] = useState("");
   const [score, setScore] = useState(0);
@@ -16,6 +16,35 @@ function CodeMatcher() {
   const [showExplanation, setShowExplanation] = useState(false);
   const [animateCorrect, setAnimateCorrect] = useState(false);
   const [animateIncorrect, setAnimateIncorrect] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchQuestions() {
+      try {
+        const fetchedQuestions = await getQuestions();
+        setQuestions(fetchedQuestions);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("An unknown error occurred");
+        }
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchQuestions();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   const currentQuestion = questions[currentQuestionIndex];
 
@@ -26,7 +55,7 @@ function CodeMatcher() {
   const handleCheck = (): void => {
     const cleanedInputValue = normalizeWhitespace(inputValue);
     const cleanedRightCodeSnippet = normalizeWhitespace(
-      currentQuestion.rightCodeSnippet
+      currentQuestion.answerCorrect
     );
 
     const isCorrect = cleanedInputValue === cleanedRightCodeSnippet;
@@ -37,8 +66,7 @@ function CodeMatcher() {
       setShowExplanation(false);
       setAnimateCorrect(false);
       setAnimateIncorrect(false);
-    }
-    if (isCorrect && !nextQuestionButton) {
+    } else if (isCorrect) {
       setScore(score + 1);
       setButtonText("Next Question");
       setNextQuestionButton(true);
@@ -47,7 +75,7 @@ function CodeMatcher() {
       setTimeout(() => {
         setShowExplanation(true);
       }, 700);
-    } else if (!isCorrect && !nextQuestionButton) {
+    } else {
       setButtonText("Next Question");
       setNextQuestionButton(true);
       setAnimateCorrect(false);
@@ -69,15 +97,18 @@ function CodeMatcher() {
 
   return (
     <div className="center-holder">
-      <p>{currentQuestion.question}</p>
+      <p>{currentQuestion.questionText}</p>
       <div>
-        <code>{currentQuestion.rightCodeSnippet}</code>
+        <code>{currentQuestion.answerCorrect}</code>
       </div>
       <div>
-        <code>{currentQuestion.wrongCodeSnippetOne}</code>
+        <code>{currentQuestion.answerWrongOne}</code>
       </div>
       <div>
-        <code>{currentQuestion.wrongCodeSnippetTwo}</code>
+        <code>{currentQuestion.answerWrongTwo}</code>
+      </div>
+      <div>
+        <code>{currentQuestion.answerWrongThree}</code>
       </div>
       <textarea
         value={inputValue}
@@ -110,9 +141,8 @@ function CodeMatcher() {
           {score}
         </p>
       </div>
-      <p>{showExplanation ? currentQuestion.explanation : ""}</p>
+      <p>{showExplanation ? currentQuestion.explenationText : ""}</p>
     </div>
   );
 }
-
 export default CodeMatcher;
