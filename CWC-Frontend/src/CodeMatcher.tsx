@@ -46,7 +46,7 @@ function CodeMatcher() {
       setAnimateIncorrect(false);
       setTimeout(() => {
         setShowExplanation(true);
-      }, 2000);
+      }, 700);
     } else if (!isCorrect && !nextQuestionButton) {
       setButtonText("Next Question");
       setNextQuestionButton(true);
@@ -54,7 +54,7 @@ function CodeMatcher() {
       setAnimateIncorrect(true);
       setTimeout(() => {
         setShowExplanation(true);
-      }, 2000);
+      }, 700);
     }
   };
 
