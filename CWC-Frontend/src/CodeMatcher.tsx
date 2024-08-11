@@ -1,6 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { getQuestions, Question } from "./QuestionFetcher";
 import "./CodeMatcher.css";
+import QuestionDisplay from "./QuestionDisplay";
 
 const normalizeWhitespace = (text: string): string => {
   return text.replace(/\s+/g, " ").trim();
@@ -47,7 +48,6 @@ function CodeMatcher() {
   }
 
   const currentQuestion = questions[currentQuestionIndex];
-
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>): void => {
     setInputValue(event.target.value);
   };
@@ -60,30 +60,40 @@ function CodeMatcher() {
 
     const isCorrect = cleanedInputValue === cleanedRightCodeSnippet;
     if (nextQuestionButton) {
-      handleNextQuestion();
-      setButtonText("Submit");
-      setNextQuestionButton(false);
-      setShowExplanation(false);
-      setAnimateCorrect(false);
-      setAnimateIncorrect(false);
+      resetStateForNextQuestion();
     } else if (isCorrect) {
-      setScore(score + 1);
-      setButtonText("Next Question");
-      setNextQuestionButton(true);
-      setAnimateCorrect(true);
-      setAnimateIncorrect(false);
-      setTimeout(() => {
-        setShowExplanation(true);
-      }, 700);
+      handleCorrectAnswer();
     } else {
-      setButtonText("Next Question");
-      setNextQuestionButton(true);
-      setAnimateCorrect(false);
-      setAnimateIncorrect(true);
-      setTimeout(() => {
-        setShowExplanation(true);
-      }, 700);
+      handleIncorrectAnswer();
     }
+  };
+
+  const resetStateForNextQuestion = () => {
+    handleNextQuestion();
+    setButtonText("Submit");
+    setNextQuestionButton(false);
+    setShowExplanation(false);
+    setAnimateCorrect(false);
+    setAnimateIncorrect(false);
+  };
+  const handleCorrectAnswer = () => {
+    setScore(score + 1);
+    setButtonText("Next Question");
+    setNextQuestionButton(true);
+    setAnimateCorrect(true);
+    setAnimateIncorrect(false);
+    setTimeout(() => {
+      setShowExplanation(true);
+    }, 700);
+  };
+  const handleIncorrectAnswer = () => {
+    setButtonText("Next Question");
+    setNextQuestionButton(true);
+    setAnimateCorrect(false);
+    setAnimateIncorrect(true);
+    setTimeout(() => {
+      setShowExplanation(true);
+    }, 700);
   };
 
   const handleNextQuestion = (): void => {
@@ -96,16 +106,7 @@ function CodeMatcher() {
   };
   return (
     <div className="center-holder">
-      <p>{currentQuestion.questionText}</p>
-      <div>
-        <code>{currentQuestion.answerCorrect}</code>
-      </div>
-      <div>
-        <code>{currentQuestion.answerWrongOne}</code>
-      </div>
-      <div>
-        <code>{currentQuestion.answerWrongTwo}</code>
-      </div>
+      <QuestionDisplay question={currentQuestion} />
       <textarea
         value={inputValue}
         onChange={handleChange}
