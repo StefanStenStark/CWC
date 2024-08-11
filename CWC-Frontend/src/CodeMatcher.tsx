@@ -11,10 +11,11 @@ function CodeMatcher() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [inputValue, setInputValue] = useState("");
   const [score, setScore] = useState(0);
-  const [buttonText, setButtonText] = useState("submit");
+  const [buttonText, setButtonText] = useState("Submit");
   const [nextQuestionButton, setNextQuestionButton] = useState(false);
   const [showExplanation, setShowExplanation] = useState(false);
   const [animateCorrect, setAnimateCorrect] = useState(false);
+  const [animateIncorrect, setAnimateIncorrect] = useState(false);
 
   const currentQuestion = questions[currentQuestionIndex];
 
@@ -31,18 +32,26 @@ function CodeMatcher() {
     const isCorrect = cleanedInputValue === cleanedRightCodeSnippet;
     if (nextQuestionButton) {
       handleNextQuestion();
-      setButtonText("submit");
+      setButtonText("Submit");
       setNextQuestionButton(false);
       setShowExplanation(false);
       setAnimateCorrect(false);
+      setAnimateIncorrect(false);
     }
     if (isCorrect && !nextQuestionButton) {
       setScore(score + 1);
-      setButtonText("Next question");
+      setButtonText("Next Question");
       setNextQuestionButton(true);
       setAnimateCorrect(true);
+      setAnimateIncorrect(false);
       setTimeout(() => {
         setShowExplanation(true);
+      }, 2000);
+    } else if (!isCorrect && !nextQuestionButton) {
+      setAnimateIncorrect(true);
+      setAnimateCorrect(false);
+      setTimeout(() => {
+        setAnimateIncorrect(false);
       }, 2000);
     }
   };
@@ -53,10 +62,11 @@ function CodeMatcher() {
     );
     setInputValue("");
     setAnimateCorrect(false);
+    setAnimateIncorrect(false);
   };
 
   return (
-    <div>
+    <div className="center-holder">
       <p>{currentQuestion.question}</p>
       <div>
         <code>{currentQuestion.rightCodeSnippet}</code>
@@ -75,10 +85,27 @@ function CodeMatcher() {
       <button
         onClick={handleCheck}
         style={{ display: "block", margin: "10px auto" }}
+        className={
+          animateCorrect
+            ? "correct-answer-button"
+            : animateIncorrect
+            ? "incorrect-answer-button"
+            : ""
+        }
       >
         {buttonText}
       </button>
-      <p className={animateCorrect ? "correct-answer" : ""}>Score: {score}</p>
+      <p
+        className={
+          animateCorrect
+            ? "correct-answer"
+            : animateIncorrect
+            ? "incorrect-answer"
+            : ""
+        }
+      >
+        Score: {score}
+      </p>
       <p>{showExplanation ? currentQuestion.explanation : ""}</p>
     </div>
   );

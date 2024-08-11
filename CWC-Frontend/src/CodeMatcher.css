@@ -1,13 +1,18 @@
-.correct-answer {
-  animation: rotateFadeAndColor 1s ease-in-out,
-    fadeOutGold 4s linear 1s forwards;
+.correct-answer-button {
+  animation: scaleAndRed 1s ease-in-out, fadeOutRed 4s linear 1s forwards;
   color: black;
 }
 
-@keyframes rotateFadeAndColor {
+.incorrect-answer-button {
+  animation: shakeAndFade 0.5s ease-in-out;
+  background-color: #ff4d4d; /* Red background for incorrect */
+  color: white;
+}
+
+@keyframes scaleAndRed {
   from {
     opacity: 0;
-    transform: scale(0.9) rotate(0deg);
+    transform: scale(1.1) rotate(0deg);
     background: transparent;
   }
   to {
@@ -15,21 +20,59 @@
     transform: scale(1) rotate(360deg);
     background: radial-gradient(
       circle,
-      rgba(255, 215, 0, 1) 50%,
-      rgba(255, 215, 0, 0) 100%
+      rgba(255, 0, 0, 1) 50%,
+      rgba(255, 0, 0, 0) 100%
     );
   }
 }
 
-@keyframes fadeOutGold {
+@keyframes fadeOutRed {
   0% {
     background: radial-gradient(
       circle,
-      rgba(255, 215, 0, 1) 5%,
-      rgba(255, 215, 0, 0) 100%
+      rgba(255, 0, 0, 1) 5%,
+      rgba(255, 0, 0, 0) 100%
     );
   }
   100% {
-    background: radial-gradient(circle, rgba(255, 215, 0, 0) 100%);
+    background: transparent;
+  }
+}
+
+@keyframes shakeAndFade {
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.center-holder {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 10px;
+  border-width: 2px;
+  border-style: solid;
+  background-color: rgb(255, 255, 255);
+}
+
+@media screen and (min-width: 740px) {
+  .center-holder {
+    width: 70%;
   }
 }
