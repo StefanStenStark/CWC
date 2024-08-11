@@ -30,9 +30,9 @@ public static class QuestionsInList{
             new Question
             {
                 QuestionText = "How do you set up a const with useState in React?",
-                AnswerCorrect = "const [number, setNumber] = useState(1)",
-                AnswerWrongOne = "const = [number, setNumber] = useState(1)",
-                AnswerWrongTwo = "const [number, setNumber] useState(1)",
+                AnswerCorrect = "const [number, setNumber] = useState(1);",
+                AnswerWrongOne = "const = [number, setNumber] = useState(1);",
+                AnswerWrongTwo = "const [number, setNumber] useState(1);",
                 ExplenationText = "Use const with useState to declare state variables and their updater function in React."
             },
             new Question
@@ -46,7 +46,7 @@ public static class QuestionsInList{
             new Question
             {
                 QuestionText = "How do you write a fetch without handeling the data?",
-                AnswerCorrect = "fetch('api');",
+                AnswerCorrect = "fetch('api);",
                 AnswerWrongOne = "fetch = ('api');",
                 AnswerWrongTwo = "fetch = 'api';",
                 ExplenationText = "No need to use the ="
