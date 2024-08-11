@@ -1,44 +1,43 @@
-.correct-answer-button {
-  animation: scaleAndRed 1s ease-in-out, fadeOutRed 4s linear 1s forwards;
-  color: black;
+button {
+  margin-top: 10px;
 }
-
+p {
+  border-radius: 5px;
+}
+.correct-answer-button {
+  animation: scaleAndGoldenCircle 1.5s ease-in-out forwards;
+  position: relative;
+  z-index: 1;
+}
 .incorrect-answer-button {
   animation: shakeAndFade 0.5s ease-in-out;
-  background-color: #ff4d4d; /* Red background for incorrect */
-  color: white;
+  background-color: #da7070;
+}
+.correct-answer {
+  animation: scaleAndGoldenCircle 1.5s ease-in-out forwards;
+  position: relative;
+  z-index: 1;
 }
 
-@keyframes scaleAndRed {
-  from {
-    opacity: 0;
-    transform: scale(1.1) rotate(0deg);
-    background: transparent;
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) rotate(360deg);
-    background: radial-gradient(
-      circle,
-      rgba(255, 0, 0, 1) 50%,
-      rgba(255, 0, 0, 0) 100%
-    );
-  }
-}
-
-@keyframes fadeOutRed {
+@keyframes scaleAndGoldenCircle {
   0% {
-    background: radial-gradient(
-      circle,
-      rgba(255, 0, 0, 1) 5%,
-      rgba(255, 0, 0, 0) 100%
-    );
+    transform: scale(1);
+    background-color: rgba(255, 215, 0, 0);
+    box-shadow: 0 0 0px rgba(255, 215, 0, 0);
+  }
+  50% {
+    transform: scale(1.2);
+    background-color: (255, 215, 0, 0.3);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5), 0 0 40px rgba(255, 215, 0, 0.5),
+      0 0 60px rgba(255, 215, 0, 0.5);
   }
   100% {
-    background: transparent;
+    transform: scale(1.1);
+    background-color: rgba(255, 215, 0, 0.8);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 1), 0 0 30px rgba(255, 215, 0, 0.75),
+      0 0 45px rgba(255, 215, 0, 0.5);
   }
 }
-
 @keyframes shakeAndFade {
   0%,
   100% {

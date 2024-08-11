@@ -48,10 +48,12 @@ function CodeMatcher() {
         setShowExplanation(true);
       }, 2000);
     } else if (!isCorrect && !nextQuestionButton) {
-      setAnimateIncorrect(true);
+      setButtonText("Next Question");
+      setNextQuestionButton(true);
       setAnimateCorrect(false);
+      setAnimateIncorrect(true);
       setTimeout(() => {
-        setAnimateIncorrect(false);
+        setShowExplanation(true);
       }, 2000);
     }
   };
@@ -84,7 +86,6 @@ function CodeMatcher() {
       />
       <button
         onClick={handleCheck}
-        style={{ display: "block", margin: "10px auto" }}
         className={
           animateCorrect
             ? "correct-answer-button"
@@ -95,17 +96,20 @@ function CodeMatcher() {
       >
         {buttonText}
       </button>
-      <p
-        className={
-          animateCorrect
-            ? "correct-answer"
-            : animateIncorrect
-            ? "incorrect-answer"
-            : ""
-        }
-      >
-        Score: {score}
-      </p>
+      <div>
+        <p>Score:</p>
+        <p
+          className={
+            animateCorrect
+              ? "correct-answer"
+              : animateIncorrect
+              ? "incorrect-answer"
+              : ""
+          }
+        >
+          {score}
+        </p>
+      </div>
       <p>{showExplanation ? currentQuestion.explanation : ""}</p>
     </div>
   );
