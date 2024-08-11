@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { getQuestions, Question } from "./QuestionFetcher";
-import "./CodeMatcher.css";
+import "../styles/CodeMatcher.css";
 import QuestionDisplay from "./QuestionDisplay";
 
 const normalizeWhitespace = (text: string): string => {

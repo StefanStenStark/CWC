@@ -1,5 +1,5 @@
-import CodeMatcher from "./CodeMatcher";
-import NavBar from "./NavBar";
+import CodeMatcher from "./components/CodeMatcher";
+import NavBar from "./components/NavBar";
 
 function App() {
   return (
