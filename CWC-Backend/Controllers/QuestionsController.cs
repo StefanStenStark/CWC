@@ -27,7 +27,7 @@ namespace CWC_Backend.Controllers
             new Question
             {
                 QuestionText = "How do you write a basic function in JavaScript?",
-                AnswerCorrect = "function myFunction() {}",
+                AnswerCorrect = "function myFunction() {};",
                 AnswerWrongOne = "function = myFunction() {};",
                 AnswerWrongTwo = "myFunction() {};",
                 ExplenationText = "The correct answer is the proper syntax for defining a named function in JavaScript."
