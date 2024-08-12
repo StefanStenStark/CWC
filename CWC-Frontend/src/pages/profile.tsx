@@ -18,7 +18,7 @@ function Profile() {
       </div>
       <p>
         A great coder with the passion to do the coding and do the thing where
-        you turn the passion into a profession.{" "}
+        you turn the passion into a profession.
       </p>
       <p>One day Oden told him to hack into the mainframe. And he did!</p>
       <p>
