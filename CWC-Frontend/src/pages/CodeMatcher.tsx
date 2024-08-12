@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { getQuestions, Question } from "./QuestionFetcher";
+import { getQuestions, Question } from "../components/QuestionFetcher";
 import "../styles/CodeMatcher.css";
-import QuestionDisplay from "./QuestionDisplay";
+import QuestionDisplay from "../components/QuestionDisplay";
 
 const normalizeWhitespace = (text: string): string => {
   return text.replace(/\s+/g, " ").trim();

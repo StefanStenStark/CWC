@@ -29,7 +29,7 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ question }) => {
         <div
           key={index}
           style={{
-            border: "2px solid black",
+            border: "1px solid gray",
             padding: "5px",
             margin: "2px",
             borderRadius: "5px",
