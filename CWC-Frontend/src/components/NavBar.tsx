@@ -10,10 +10,7 @@ function NavBar() {
           <Link to="/profile">Profile</Link>
         </li>
         <li>
-          <Link to="/">Game</Link>
-        </li>
-        <li>
-          <a href="#about">Score</a>
+          <Link to="/">Test</Link>
         </li>
       </ul>
     </nav>
