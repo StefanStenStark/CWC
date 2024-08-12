@@ -134,7 +134,7 @@ function CodeMatcher() {
             {score}/{questions.length}
           </p>
         </div>
-        <Link to="/">Try again</Link>
+        <Link to="/Tests">Try again</Link>
       </section>
     );
   }
