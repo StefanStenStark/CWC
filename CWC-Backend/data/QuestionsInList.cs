@@ -25,7 +25,7 @@ public static class QuestionsInList{
                 AnswerCorrect = "function myFunction() {};",
                 AnswerWrongOne = "function = myFunction() {};",
                 AnswerWrongTwo = "myFunction() {};",
-                ExplenationText = "The correct answer is the proper syntax for defining a named function in JavaScript."
+                ExplenationText = "Decare a function with the word function followed by the name"
             },
             new Question
             {
@@ -46,7 +46,7 @@ public static class QuestionsInList{
             new Question
             {
                 QuestionText = "How do you write a fetch without handeling the data?",
-                AnswerCorrect = "fetch('api);",
+                AnswerCorrect = "fetch('api');",
                 AnswerWrongOne = "fetch = ('api');",
                 AnswerWrongTwo = "fetch = 'api';",
                 ExplenationText = "No need to use the ="
