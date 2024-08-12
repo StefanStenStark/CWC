@@ -24,8 +24,17 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ question }) => {
   return (
     <div>
       <p>{question.questionText}</p>
+      <p>one of the three is correct, write it out</p>
       {shuffledAnswers.map((answer, index) => (
-        <div key={index}>
+        <div
+          key={index}
+          style={{
+            border: "2px solid black",
+            padding: "5px",
+            margin: "2px",
+            borderRadius: "5px",
+          }}
+        >
           <code>{answer.text}</code>
         </div>
       ))}

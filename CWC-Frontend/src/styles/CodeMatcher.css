@@ -18,6 +18,9 @@ p {
   position: relative;
   z-index: 1;
 }
+textarea {
+  width: 80%;
+}
 
 @keyframes scaleAndGoldenCircle {
   0% {

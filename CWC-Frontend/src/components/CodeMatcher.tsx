@@ -105,7 +105,7 @@ function CodeMatcher() {
     setAnimateIncorrect(false);
   };
   return (
-    <div className="center-holder">
+    <section className="center-holder">
       <QuestionDisplay question={currentQuestion} />
       <textarea
         value={inputValue}
@@ -139,7 +139,7 @@ function CodeMatcher() {
         </p>
       </div>
       <p>{showExplanation ? currentQuestion.explenationText : ""}</p>
-    </div>
+    </section>
   );
 }
 export default CodeMatcher;
