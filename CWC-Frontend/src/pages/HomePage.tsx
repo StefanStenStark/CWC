@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function HomePage() {
   return (
     <div>
@@ -25,6 +27,8 @@ function HomePage() {
           top employers for their expertise and readiness to work on high-impact
           projects.
         </p>
+
+        <Link to="/Tests">Take the first test</Link>
       </section>
     </div>
   );
