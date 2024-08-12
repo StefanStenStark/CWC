@@ -31,3 +31,24 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+.center-holder {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 10px;
+  border-width: 2px;
+  border-style: solid;
+  box-shadow: 0 0 20px rgba(176, 176, 176, 0.385);
+  background-color: rgb(255, 255, 255);
+}
+
+@media screen and (min-width: 740px) {
+  .center-holder {
+    width: 70%;
+  }
+  textarea {
+    width: 60%;
+  }
+}

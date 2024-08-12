@@ -2,6 +2,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { getQuestions, Question } from "../components/QuestionFetcher";
 import "../styles/CodeMatcher.css";
 import QuestionDisplay from "../components/QuestionDisplay";
+import { Link } from "react-router-dom";
 
 const normalizeWhitespace = (text: string): string => {
   return text.replace(/\s+/g, " ").trim();
@@ -19,6 +20,7 @@ function CodeMatcher() {
   const [animateIncorrect, setAnimateIncorrect] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [endOfQuestions, setEndOfQuestions] = useState(false);
 
   useEffect(() => {
     async function fetchQuestions() {
@@ -79,6 +81,9 @@ function CodeMatcher() {
   const handleCorrectAnswer = () => {
     setScore(score + 1);
     setButtonText("Next Question");
+    if (currentQuestionIndex + 1 == questions.length) {
+      setButtonText("Finish");
+    }
     setNextQuestionButton(true);
     setAnimateCorrect(true);
     setAnimateIncorrect(false);
@@ -88,6 +93,9 @@ function CodeMatcher() {
   };
   const handleIncorrectAnswer = () => {
     setButtonText("Next Question");
+    if (currentQuestionIndex + 1 == questions.length) {
+      setButtonText("Finish");
+    }
     setNextQuestionButton(true);
     setAnimateCorrect(false);
     setAnimateIncorrect(true);
@@ -97,13 +105,39 @@ function CodeMatcher() {
   };
 
   const handleNextQuestion = (): void => {
-    setCurrentQuestionIndex((prevIndex) =>
-      prevIndex < questions.length - 1 ? prevIndex + 1 : 0
-    );
+    if (currentQuestionIndex + 1 == questions.length) {
+      setEndOfQuestions(true);
+    } else {
+      setCurrentQuestionIndex((prevIndex) =>
+        prevIndex < questions.length - 1 ? prevIndex + 1 : 0
+      );
+    }
     setInputValue("");
     setAnimateCorrect(false);
     setAnimateIncorrect(false);
   };
+  if (endOfQuestions) {
+    return (
+      <section className="center-holder">
+        <p>You answered all the questions!</p>
+        <div>
+          <p>Score:</p>
+          <p
+            className={
+              animateCorrect
+                ? "correct-answer"
+                : animateIncorrect
+                ? "incorrect-answer"
+                : ""
+            }
+          >
+            {score}/{questions.length}
+          </p>
+        </div>
+        <Link to="/">Try again</Link>
+      </section>
+    );
+  }
   return (
     <section className="center-holder">
       <QuestionDisplay question={currentQuestion} />
@@ -124,9 +158,10 @@ function CodeMatcher() {
       >
         {buttonText}
       </button>
-      <div>
-        <p>Score:</p>
-        <p
+
+      <p>Score:</p>
+      <p>
+        <span
           className={
             animateCorrect
               ? "correct-answer"
@@ -136,8 +171,12 @@ function CodeMatcher() {
           }
         >
           {score}
-        </p>
-      </div>
+        </span>
+      </p>
+      <p>
+        Question: {currentQuestionIndex + 1}/{questions.length}
+      </p>
+
       <p>{showExplanation ? currentQuestion.explenationText : ""}</p>
     </section>
   );

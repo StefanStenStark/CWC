@@ -1,0 +1,31 @@
+.card-holder {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 10px;
+  gap: 10px;
+}
+
+.card-holder article {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 80%;
+  box-sizing: border-box;
+}
+
+.card-holder article a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.card-holder article a:hover {
+  text-decoration: underline;
+}
+@media screen and (min-width: 740px) {
+  .card-holder article {
+    width: 44%;
+  }
+}

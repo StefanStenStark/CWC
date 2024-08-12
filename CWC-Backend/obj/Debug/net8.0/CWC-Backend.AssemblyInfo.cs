@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CWC-Backend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6c12ebfb3be2511e43838ebdd74064dcab72fcea")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+eaaa9a7e0dd0fe3f83e8bba3729c307ad188ad13")]
 [assembly: System.Reflection.AssemblyProductAttribute("CWC-Backend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CWC-Backend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
