@@ -70,6 +70,7 @@ function CodeMatcher() {
     }
   };
 
+  //Lukas låås säger att jag behöver ju inte sätta det till bool jag kan ju använda strings och beroende på string så gör jag olika saker :D haha
   const resetStateForNextQuestion = () => {
     handleNextQuestion();
     setButtonText("Submit");
