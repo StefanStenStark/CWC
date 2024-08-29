@@ -99,12 +99,10 @@ function CodeMatcher() {
   }
   return (
     <section className="center-holder">
-      <QuestionDisplay question={currentQuestion} />
-
-      <textarea
-        value={inputValue}
-        onChange={(event) => setInputValue(event.target.value)}
-        placeholder="Type the code here"
+      <QuestionDisplay
+        question={currentQuestion}
+        inputValue={inputValue}
+        setInputValue={setInputValue}
       />
 
       <ScoreAndButton

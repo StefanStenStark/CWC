@@ -3,9 +3,15 @@ import { Question } from "./QuestionFetcher";
 
 interface QuestionDisplayProps {
   question: Question;
+  inputValue: string;
+  setInputValue: (value: string) => void;
 }
 
-const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ question }) => {
+const QuestionDisplay: React.FC<QuestionDisplayProps> = ({
+  question,
+  inputValue,
+  setInputValue,
+}) => {
   const shuffledAnswers = useMemo(() => {
     const answers = [
       { text: question.answerCorrect, isCorrect: true },
@@ -38,6 +44,11 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ question }) => {
           <code>{answer.text}</code>
         </div>
       ))}
+      <textarea
+        value={inputValue}
+        onChange={(event) => setInputValue(event.target.value)}
+        placeholder="Type the code here"
+      />
     </div>
   );
 };
