@@ -68,6 +68,9 @@ function CodeMatcher() {
     } else {
       handleIncorrectAnswer();
     }
+    if (currentQuestionIndex + 1 == questions.length) {
+      setButtonText("Finish");
+    }
   };
 
   const resetStateForNextQuestion = () => {
@@ -78,16 +81,12 @@ function CodeMatcher() {
   const handleCorrectAnswer = () => {
     setScore(score + 1);
     setButtonText("Next Question");
-    if (currentQuestionIndex + 1 == questions.length) {
-      setButtonText("Finish");
-    }
+
     setStateOfAnimation("handleCorrectAnswer");
   };
   const handleIncorrectAnswer = () => {
     setButtonText("Next Question");
-    if (currentQuestionIndex + 1 == questions.length) {
-      setButtonText("Finish");
-    }
+
     setStateOfAnimation("handleIncorrectAnswer");
   };
 
