@@ -21,10 +21,10 @@ function CodeMatcher() {
 
   const handleCheck = (): void => {
     const cleanedInputValue = normalizeWhitespace(inputValue);
-    const cleanedRightCodeSnippet = normalizeWhitespace(
+    const cleanedCorrectCode = normalizeWhitespace(
       currentQuestion.answerCorrect
     );
-    const isCorrect = cleanedInputValue === cleanedRightCodeSnippet;
+    const isCorrect = cleanedInputValue === cleanedCorrectCode;
     if (
       stateOfAnitmation == "handleCorrectAnswer" ||
       stateOfAnitmation == "handleIncorrectAnswer"
