@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getQuestions, Question } from "../components/QuestionFetcher";
 import "../styles/CodeMatcher.css";
 import QuestionDisplay from "../components/QuestionDisplay";
@@ -18,10 +18,6 @@ function CodeMatcher() {
   const [endOfQuestions, setEndOfQuestions] = useState(false);
   const [stateOfAnitmation, setStateOfAnimation] = useState("");
   const currentQuestion = questions[currentQuestionIndex];
-
-  const handleChange = (event: ChangeEvent<HTMLTextAreaElement>): void => {
-    setInputValue(event.target.value);
-  };
 
   const handleCheck = (): void => {
     const cleanedInputValue = normalizeWhitespace(inputValue);
@@ -104,9 +100,10 @@ function CodeMatcher() {
   return (
     <section className="center-holder">
       <QuestionDisplay question={currentQuestion} />
+
       <textarea
         value={inputValue}
-        onChange={handleChange}
+        onChange={(event) => setInputValue(event.target.value)}
         placeholder="Type the code here"
       />
 
