@@ -14,7 +14,6 @@ function CodeMatcher() {
   const [inputValue, setInputValue] = useState("");
   const [score, setScore] = useState(0);
   const [buttonText, setButtonText] = useState("Submit");
-  const [nextQuestionButton, setNextQuestionButton] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [endOfQuestions, setEndOfQuestions] = useState(false);
@@ -48,6 +47,7 @@ function CodeMatcher() {
   }
 
   const currentQuestion = questions[currentQuestionIndex];
+
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>): void => {
     setInputValue(event.target.value);
   };
@@ -57,9 +57,11 @@ function CodeMatcher() {
     const cleanedRightCodeSnippet = normalizeWhitespace(
       currentQuestion.answerCorrect
     );
-
     const isCorrect = cleanedInputValue === cleanedRightCodeSnippet;
-    if (nextQuestionButton) {
+    if (
+      stateOfAnitmation == "handleCorrectAnswer" ||
+      stateOfAnitmation == "handleIncorrectAnswer"
+    ) {
       resetStateForNextQuestion();
     } else if (isCorrect) {
       handleCorrectAnswer();
@@ -72,7 +74,6 @@ function CodeMatcher() {
     handleNextQuestion();
     setButtonText("Submit");
     setStateOfAnimation("resetStateForNextQuestion");
-    setNextQuestionButton(false);
   };
   const handleCorrectAnswer = () => {
     setScore(score + 1);
@@ -81,7 +82,6 @@ function CodeMatcher() {
       setButtonText("Finish");
     }
     setStateOfAnimation("handleCorrectAnswer");
-    setNextQuestionButton(true);
   };
   const handleIncorrectAnswer = () => {
     setButtonText("Next Question");
@@ -89,7 +89,6 @@ function CodeMatcher() {
       setButtonText("Finish");
     }
     setStateOfAnimation("handleIncorrectAnswer");
-    setNextQuestionButton(true);
   };
 
   const handleNextQuestion = (): void => {
