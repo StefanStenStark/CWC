@@ -3,6 +3,7 @@ import { getQuestions, Question } from "../components/QuestionFetcher";
 import "../styles/CodeMatcher.css";
 import QuestionDisplay from "../components/QuestionDisplay";
 import { Link } from "react-router-dom";
+import ScoreAndButton from "../components/ScoreAndButton";
 
 const normalizeWhitespace = (text: string): string => {
   return text.replace(/\s+/g, " ").trim();
@@ -14,10 +15,49 @@ function CodeMatcher() {
   const [inputValue, setInputValue] = useState("");
   const [score, setScore] = useState(0);
   const [buttonText, setButtonText] = useState("Submit");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [endOfQuestions, setEndOfQuestions] = useState(false);
   const [stateOfAnitmation, setStateOfAnimation] = useState("");
+  const currentQuestion = questions[currentQuestionIndex];
+
+  const handleChange = (event: ChangeEvent<HTMLTextAreaElement>): void => {
+    setInputValue(event.target.value);
+  };
+
+  const handleCheck = (): void => {
+    const cleanedInputValue = normalizeWhitespace(inputValue);
+    const cleanedRightCodeSnippet = normalizeWhitespace(
+      currentQuestion.answerCorrect
+    );
+    const isCorrect = cleanedInputValue === cleanedRightCodeSnippet;
+    if (
+      stateOfAnitmation == "handleCorrectAnswer" ||
+      stateOfAnitmation == "handleIncorrectAnswer"
+    ) {
+      handleNextQuestion();
+      setButtonText("Submit");
+      setStateOfAnimation("resetStateForNextQuestion");
+    } else if (isCorrect) {
+      setScore(score + 1);
+      setButtonText("Next Question");
+      setStateOfAnimation("handleCorrectAnswer");
+    } else {
+      setButtonText("Next Question");
+      setStateOfAnimation("handleIncorrectAnswer");
+    }
+    if (currentQuestionIndex + 1 == questions.length) {
+      setButtonText("Finish");
+    }
+  };
+  const handleNextQuestion = (): void => {
+    if (currentQuestionIndex + 1 == questions.length) {
+      setEndOfQuestions(true);
+    } else {
+      setCurrentQuestionIndex((prevIndex) =>
+        prevIndex < questions.length - 1 ? prevIndex + 1 : 0
+      );
+    }
+    setInputValue("");
+  };
 
   useEffect(() => {
     async function fetchQuestions() {
@@ -37,67 +77,16 @@ function CodeMatcher() {
 
     fetchQuestions();
   }, []);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   if (loading) {
     return <div>Loading...</div>;
   }
-
   if (error) {
     return <div>Error: {error}</div>;
   }
 
-  const currentQuestion = questions[currentQuestionIndex];
-
-  const handleChange = (event: ChangeEvent<HTMLTextAreaElement>): void => {
-    setInputValue(event.target.value);
-  };
-
-  const handleCheck = (): void => {
-    const cleanedInputValue = normalizeWhitespace(inputValue);
-    const cleanedRightCodeSnippet = normalizeWhitespace(
-      currentQuestion.answerCorrect
-    );
-    const isCorrect = cleanedInputValue === cleanedRightCodeSnippet;
-    if (
-      stateOfAnitmation == "handleCorrectAnswer" ||
-      stateOfAnitmation == "handleIncorrectAnswer"
-    ) {
-      resetStateForNextQuestion();
-    } else if (isCorrect) {
-      handleCorrectAnswer();
-    } else {
-      handleIncorrectAnswer();
-    }
-    if (currentQuestionIndex + 1 == questions.length) {
-      setButtonText("Finish");
-    }
-  };
-
-  const resetStateForNextQuestion = () => {
-    handleNextQuestion();
-    setButtonText("Submit");
-    setStateOfAnimation("resetStateForNextQuestion");
-  };
-  const handleCorrectAnswer = () => {
-    setScore(score + 1);
-    setButtonText("Next Question");
-    setStateOfAnimation("handleCorrectAnswer");
-  };
-  const handleIncorrectAnswer = () => {
-    setButtonText("Next Question");
-    setStateOfAnimation("handleIncorrectAnswer");
-  };
-
-  const handleNextQuestion = (): void => {
-    if (currentQuestionIndex + 1 == questions.length) {
-      setEndOfQuestions(true);
-    } else {
-      setCurrentQuestionIndex((prevIndex) =>
-        prevIndex < questions.length - 1 ? prevIndex + 1 : 0
-      );
-    }
-    setInputValue("");
-  };
   if (endOfQuestions) {
     return (
       <section className="center-holder">
@@ -120,37 +109,16 @@ function CodeMatcher() {
         onChange={handleChange}
         placeholder="Type the code here"
       />
-      <button
-        onClick={handleCheck}
-        className={
-          stateOfAnitmation == "handleCorrectAnswer"
-            ? "correct-answer-button"
-            : stateOfAnitmation == "handleIncorrectAnswer"
-            ? "incorrect-answer-button"
-            : ""
-        }
-      >
-        {buttonText}
-      </button>
 
-      <p>Score:</p>
-      <p>
-        <span
-          className={
-            stateOfAnitmation == "handleCorrectAnswer"
-              ? "correct-answer"
-              : stateOfAnitmation == "handleIncorrectAnswer"
-              ? "incorrect-answer"
-              : ""
-          }
-        >
-          {score}
-        </span>
-      </p>
+      <ScoreAndButton
+        onClick={handleCheck}
+        stateOfAnitmation={stateOfAnitmation}
+        buttonText={buttonText}
+        score={score}
+      />
       <p>
         Question: {currentQuestionIndex + 1}/{questions.length}
       </p>
-
       <p>
         {stateOfAnitmation == "handleCorrectAnswer" ||
         stateOfAnitmation == "handleIncorrectAnswer"
