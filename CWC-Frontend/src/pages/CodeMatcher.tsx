@@ -81,12 +81,10 @@ function CodeMatcher() {
   const handleCorrectAnswer = () => {
     setScore(score + 1);
     setButtonText("Next Question");
-
     setStateOfAnimation("handleCorrectAnswer");
   };
   const handleIncorrectAnswer = () => {
     setButtonText("Next Question");
-
     setStateOfAnimation("handleIncorrectAnswer");
   };
 
@@ -106,15 +104,7 @@ function CodeMatcher() {
         <p>You answered all the questions!</p>
         <div>
           <p>Score:</p>
-          <p
-            className={
-              stateOfAnitmation == "handleCorrectAnswer"
-                ? "correct-answer"
-                : stateOfAnitmation == "handleIncorrectAnswer"
-                ? "incorrect-answer"
-                : ""
-            }
-          >
+          <p>
             {score}/{questions.length}
           </p>
         </div>
