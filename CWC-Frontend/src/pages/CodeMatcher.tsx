@@ -15,13 +15,9 @@ function CodeMatcher() {
   const [score, setScore] = useState(0);
   const [buttonText, setButtonText] = useState("Submit");
   const [nextQuestionButton, setNextQuestionButton] = useState(false);
-  const [showExplanation, setShowExplanation] = useState(false);
-  const [animateCorrect, setAnimateCorrect] = useState(false);
-  const [animateIncorrect, setAnimateIncorrect] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [endOfQuestions, setEndOfQuestions] = useState(false);
-
   const [stateOfAnitmation, setStateOfAnimation] = useState("");
 
   useEffect(() => {
@@ -72,15 +68,11 @@ function CodeMatcher() {
     }
   };
 
-  //Lukas låås säger att jag behöver ju inte sätta det till bool jag kan ju använda strings och beroende på string så gör jag olika saker :D haha
   const resetStateForNextQuestion = () => {
     handleNextQuestion();
     setButtonText("Submit");
     setStateOfAnimation("resetStateForNextQuestion");
     setNextQuestionButton(false);
-    setShowExplanation(false);
-    setAnimateCorrect(false);
-    setAnimateIncorrect(false);
   };
   const handleCorrectAnswer = () => {
     setScore(score + 1);
@@ -90,11 +82,6 @@ function CodeMatcher() {
     }
     setStateOfAnimation("handleCorrectAnswer");
     setNextQuestionButton(true);
-    setAnimateCorrect(true);
-    setAnimateIncorrect(false);
-    setTimeout(() => {
-      setShowExplanation(true);
-    }, 700);
   };
   const handleIncorrectAnswer = () => {
     setButtonText("Next Question");
@@ -103,11 +90,6 @@ function CodeMatcher() {
     }
     setStateOfAnimation("handleIncorrectAnswer");
     setNextQuestionButton(true);
-    setAnimateCorrect(false);
-    setAnimateIncorrect(true);
-    setTimeout(() => {
-      setShowExplanation(true);
-    }, 700);
   };
 
   const handleNextQuestion = (): void => {
@@ -119,8 +101,6 @@ function CodeMatcher() {
       );
     }
     setInputValue("");
-    setAnimateCorrect(false);
-    setAnimateIncorrect(false);
   };
   if (endOfQuestions) {
     return (
@@ -155,9 +135,9 @@ function CodeMatcher() {
       <button
         onClick={handleCheck}
         className={
-          animateCorrect
+          stateOfAnitmation == "handleCorrectAnswer"
             ? "correct-answer-button"
-            : animateIncorrect
+            : stateOfAnitmation == "handleIncorrectAnswer"
             ? "incorrect-answer-button"
             : ""
         }
@@ -169,9 +149,9 @@ function CodeMatcher() {
       <p>
         <span
           className={
-            animateCorrect
+            stateOfAnitmation == "handleCorrectAnswer"
               ? "correct-answer"
-              : animateIncorrect
+              : stateOfAnitmation == "handleIncorrectAnswer"
               ? "incorrect-answer"
               : ""
           }
@@ -183,7 +163,12 @@ function CodeMatcher() {
         Question: {currentQuestionIndex + 1}/{questions.length}
       </p>
 
-      <p>{showExplanation ? currentQuestion.explenationText : ""}</p>
+      <p>
+        {stateOfAnitmation == "handleCorrectAnswer" ||
+        stateOfAnitmation == "handleIncorrectAnswer"
+          ? currentQuestion.explenationText
+          : ""}
+      </p>
     </section>
   );
 }
