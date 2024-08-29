@@ -22,6 +22,8 @@ function CodeMatcher() {
   const [error, setError] = useState<string | null>(null);
   const [endOfQuestions, setEndOfQuestions] = useState(false);
 
+  const [stateOfAnitmation, setStateOfAnimation] = useState("");
+
   useEffect(() => {
     async function fetchQuestions() {
       try {
@@ -74,6 +76,7 @@ function CodeMatcher() {
   const resetStateForNextQuestion = () => {
     handleNextQuestion();
     setButtonText("Submit");
+    setStateOfAnimation("resetStateForNextQuestion");
     setNextQuestionButton(false);
     setShowExplanation(false);
     setAnimateCorrect(false);
@@ -85,6 +88,7 @@ function CodeMatcher() {
     if (currentQuestionIndex + 1 == questions.length) {
       setButtonText("Finish");
     }
+    setStateOfAnimation("handleCorrectAnswer");
     setNextQuestionButton(true);
     setAnimateCorrect(true);
     setAnimateIncorrect(false);
@@ -97,6 +101,7 @@ function CodeMatcher() {
     if (currentQuestionIndex + 1 == questions.length) {
       setButtonText("Finish");
     }
+    setStateOfAnimation("handleIncorrectAnswer");
     setNextQuestionButton(true);
     setAnimateCorrect(false);
     setAnimateIncorrect(true);
@@ -125,9 +130,9 @@ function CodeMatcher() {
           <p>Score:</p>
           <p
             className={
-              animateCorrect
+              stateOfAnitmation == "handleCorrectAnswer"
                 ? "correct-answer"
-                : animateIncorrect
+                : stateOfAnitmation == "handleIncorrectAnswer"
                 ? "incorrect-answer"
                 : ""
             }
