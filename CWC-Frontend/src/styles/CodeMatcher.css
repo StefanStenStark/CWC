@@ -5,7 +5,7 @@ p {
   border-radius: 5px;
 }
 .correct-answer-button {
-  animation: scaleAndGoldenCircle 1.5s ease-in-out forwards;
+  animation: scaleAndGoldenCircle 1.5s ease-in-out infinite;
   position: relative;
   z-index: 1;
 }
@@ -28,17 +28,22 @@ textarea {
     background-color: rgba(255, 215, 0, 0);
     box-shadow: 0 0 0px rgba(255, 215, 0, 0);
   }
-  50% {
+  30% {
     transform: scale(1.2);
     background-color: (255, 215, 0, 0.3);
     box-shadow: 0 0 20px rgba(255, 215, 0, 0.5), 0 0 40px rgba(255, 215, 0, 0.5),
       0 0 60px rgba(255, 215, 0, 0.5);
   }
-  100% {
+  50% {
     transform: scale(1.1);
     background-color: rgba(255, 215, 0, 0.5);
     box-shadow: 0 0 15px rgba(255, 215, 0, 1), 0 0 30px rgba(255, 215, 0, 0.75),
       0 0 45px rgba(255, 215, 0, 0.5);
+  }
+  0% {
+    transform: scale(1);
+    background-color: rgba(255, 215, 0, 0);
+    box-shadow: 0 0 0px rgba(255, 215, 0, 0);
   }
 }
 @keyframes shakeAndFade {
